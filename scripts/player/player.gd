@@ -1,8 +1,9 @@
 extends CharacterBody2D
-## Side-scrolling runner: jump over ground hazards, duck under flying ones.
+## Platform runner with horizontal movement, jump, duck, and world wrap.
 
 const GRAVITY := 1800.0
 const JUMP_VELOCITY := -620.0
+const RUN_SPEED := 280.0
 const DUCK_HEIGHT := 30.0
 const STAND_HEIGHT := 60.0
 const STAND_WIDTH := 40.0
@@ -13,17 +14,21 @@ const STAND_WIDTH := 40.0
 
 var _is_ducking := false
 var _duck_shape := RectangleShape2D.new()
+var _world_bounds: WorldBounds
 
 
 func _ready() -> void:
 	_duck_shape.size = Vector2(STAND_WIDTH, DUCK_HEIGHT)
 	_apply_stance(false)
+	_world_bounds = get_parent() as WorldBounds
 
 
 func _physics_process(delta: float) -> void:
-	if not GameState.is_playing:
+	if not GameState.is_playing or GameState.is_dialog_open:
+		velocity = Vector2.ZERO
 		return
 
+	_apply_world_wrap()
 	_handle_input()
 
 	if not is_on_floor():
@@ -31,11 +36,25 @@ func _physics_process(delta: float) -> void:
 	elif velocity.y > 0.0:
 		velocity.y = 0.0
 
-	velocity.x = 0.0
+	move_and_slide()
+	_apply_world_wrap()
+
+
+func _apply_world_wrap() -> void:
+	if _world_bounds == null:
+		return
+	if not _world_bounds.should_wrap_x(global_position.x):
+		return
+
+	global_position = _world_bounds.wrap_position(global_position)
+	# Re-test floor contact so the player does not keep falling after a wrap.
 	move_and_slide()
 
 
 func _handle_input() -> void:
+	var direction := Input.get_axis("move_left", "move_right")
+	velocity.x = direction * RUN_SPEED
+
 	var wants_duck := (
 		Input.is_action_pressed("duck")
 		or Input.is_action_pressed("move_down")

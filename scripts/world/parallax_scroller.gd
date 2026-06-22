@@ -1,6 +1,7 @@
 extends ParallaxBackground
-## Scrolls parallax layers based on current run speed.
+## Static parallax backdrop. Layers no longer auto-scroll with run speed.
 
+@export var auto_scroll := false
 @export var speed_multiplier := 1.0
 
 var _scroll_speed := GameState.BASE_SCROLL_SPEED
@@ -12,7 +13,7 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
-	if not GameState.is_playing:
+	if not auto_scroll or not GameState.is_playing:
 		return
 	scroll_offset.x += _scroll_speed * speed_multiplier * delta
 

@@ -1,10 +1,14 @@
-[gd_scene load_steps=7 format=3]
+[gd_scene load_steps=10 format=3]
 
 [ext_resource type="Script" path="res://scripts/game/game_manager.gd" id="1_manager"]
 [ext_resource type="Script" path="res://scripts/world/parallax_scroller.gd" id="2_parallax"]
+[ext_resource type="Script" path="res://scripts/world/world_bounds.gd" id="8_bounds"]
+[ext_resource type="Script" path="res://scripts/world/camera_follow.gd" id="9_camera"]
 [ext_resource type="PackedScene" path="res://scenes/player/player.tscn" id="3_player"]
 [ext_resource type="Script" path="res://scripts/game/spawner.gd" id="4_spawner"]
 [ext_resource type="PackedScene" path="res://scenes/ui/hud.tscn" id="5_hud"]
+[ext_resource type="PackedScene" path="res://scenes/npcs/test_npc.tscn" id="6_npc"]
+[ext_resource type="PackedScene" path="res://scenes/ui/dialog_box.tscn" id="7_dialog"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ground"]
 size = Vector2(4000, 40)
@@ -45,6 +49,7 @@ offset_bottom = 380.0
 color = Color(0.55, 0.55, 0.5, 1)
 
 [node name="World" type="Node2D" parent="."]
+script = ExtResource("8_bounds")
 
 [node name="Ground" type="StaticBody2D" parent="World"]
 position = Vector2(480, 380)
@@ -63,10 +68,16 @@ color = Color(0.45, 0.45, 0.4, 1)
 [node name="Player" parent="World" instance=ExtResource("3_player")]
 position = Vector2(150, 360)
 
+[node name="Camera2D" type="Camera2D" parent="World"]
+position = Vector2(150, 270)
+script = ExtResource("9_camera")
+
 [node name="Spawner" type="Node2D" parent="World"]
 script = ExtResource("4_spawner")
 
+[node name="TestNpc" parent="World" instance=ExtResource("6_npc")]
+position = Vector2(600, 360)
+
 [node name="HUD" parent="." instance=ExtResource("5_hud")]
 
-[node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(480, 270)
+[node name="DialogBox" parent="." instance=ExtResource("7_dialog")]

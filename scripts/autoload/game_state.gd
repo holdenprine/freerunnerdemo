@@ -7,6 +7,7 @@ const SPEED_RAMP_PER_SECOND := 8.0
 
 var is_playing := false
 var is_game_over := false
+var is_dialog_open := false
 var score := 0
 var high_score := 0
 var scroll_speed := BASE_SCROLL_SPEED
@@ -16,6 +17,7 @@ var elapsed_time := 0.0
 func start_run() -> void:
 	is_playing = true
 	is_game_over = false
+	is_dialog_open = false
 	score = 0
 	elapsed_time = 0.0
 	scroll_speed = BASE_SCROLL_SPEED
@@ -37,6 +39,7 @@ func end_run() -> void:
 func reset_run() -> void:
 	is_playing = false
 	is_game_over = false
+	is_dialog_open = false
 	score = 0
 	elapsed_time = 0.0
 	scroll_speed = BASE_SCROLL_SPEED

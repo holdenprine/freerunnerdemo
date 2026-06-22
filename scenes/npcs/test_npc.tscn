@@ -1,0 +1,42 @@
+[gd_scene format=3 uid="uid://rew5hcs46hvg"]
+
+[ext_resource type="Script" uid="uid://8s7cv6auvjvc" path="res://scripts/npcs/test_npc.gd" id="1_npc"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_npc"]
+size = Vector2(32, 60)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_interact"]
+size = Vector2(80, 80)
+
+[node name="TestNpc" type="Node2D" unique_id=1460328594]
+script = ExtResource("1_npc")
+
+[node name="Visual" type="ColorRect" parent="." unique_id=667586887]
+offset_left = -16.0
+offset_top = -60.0
+offset_right = 16.0
+color = Color(0.35, 0.45, 0.85, 1)
+
+[node name="Body" type="StaticBody2D" parent="." unique_id=1923283910]
+collision_layer = 0
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Body" unique_id=1675326994]
+position = Vector2(0, -30)
+shape = SubResource("RectangleShape2D_npc")
+
+[node name="InteractionArea" type="Area2D" parent="." unique_id=1726412045]
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea" unique_id=1293335496]
+position = Vector2(0, -30)
+shape = SubResource("RectangleShape2D_interact")
+
+[node name="PromptLabel" type="Label" parent="." unique_id=989372673]
+offset_left = -60.0
+offset_top = -88.0
+offset_right = 60.0
+offset_bottom = -68.0
+theme_override_font_sizes/font_size = 12
+text = "Press E"
+horizontal_alignment = 1
