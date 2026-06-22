@@ -49,6 +49,7 @@ offset_bottom = 380.0
 color = Color(0.55, 0.55, 0.5, 1)
 
 [node name="World" type="Node2D" parent="."]
+y_sort_enabled = true
 script = ExtResource("8_bounds")
 
 [node name="Ground" type="StaticBody2D" parent="World"]
@@ -65,18 +66,18 @@ offset_right = 2000.0
 offset_bottom = 20.0
 color = Color(0.45, 0.45, 0.4, 1)
 
+[node name="Spawner" type="Node2D" parent="World"]
+script = ExtResource("4_spawner")
+
+[node name="TestNpc" parent="World" instance=ExtResource("6_npc")]
+position = Vector2(600, 360)
+
 [node name="Player" parent="World" instance=ExtResource("3_player")]
 position = Vector2(150, 360)
 
 [node name="Camera2D" type="Camera2D" parent="World"]
 position = Vector2(150, 270)
 script = ExtResource("9_camera")
-
-[node name="Spawner" type="Node2D" parent="World"]
-script = ExtResource("4_spawner")
-
-[node name="TestNpc" parent="World" instance=ExtResource("6_npc")]
-position = Vector2(600, 360)
 
 [node name="HUD" parent="." instance=ExtResource("5_hud")]
 

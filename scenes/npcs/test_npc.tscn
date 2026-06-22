@@ -9,6 +9,7 @@ size = Vector2(32, 60)
 size = Vector2(80, 80)
 
 [node name="TestNpc" type="Node2D" unique_id=1460328594]
+z_index = 0
 script = ExtResource("1_npc")
 
 [node name="Visual" type="ColorRect" parent="." unique_id=667586887]
