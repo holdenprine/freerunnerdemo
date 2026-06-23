@@ -1,36 +1,25 @@
 extends Area2D
 ## Quest item picked up when the player walks into it.
 
-@export var min_spawn_separation := -1.0
+@export var item_id := "quest_item"
+@export var display_name := "Quest Item"
+@export var item_color := Color(0.95, 0.8, 0.15, 1)
 
 @onready var visual: ColorRect = $Visual
 
-var _world_bounds: WorldBounds
-
 
 func _ready() -> void:
+	add_to_group("quest_items")
 	add_to_group("spawn_avoid")
+	visual.color = item_color
 	body_entered.connect(_on_body_entered)
-	_world_bounds = get_parent() as WorldBounds
-	_place_at_random_safe_position()
-
-
-func _place_at_random_safe_position() -> void:
-	if _world_bounds == null:
-		return
-
-	var separation := min_spawn_separation
-	if separation < 0.0:
-		separation = _world_bounds.default_spawn_separation
-
-	_world_bounds.place_node_at_safe_random(self, global_position.y, [], separation)
 
 
 func _on_body_entered(body: Node2D) -> void:
 	if not body.is_in_group("player"):
 		return
-	if GameState.has_quest_item or GameState.quest_completed:
+	if GameState.quest_completed or GameState.is_quest_item_collected(item_id):
 		return
 
-	GameState.pick_up_quest_item()
+	GameState.pick_up_quest_item(item_id)
 	queue_free()

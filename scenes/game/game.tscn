@@ -12,6 +12,8 @@
 [ext_resource type="PackedScene" uid="uid://6cv5ypll0f8k" path="res://scenes/restart/game_over_menu.tscn" id="10_game_over"]
 [ext_resource type="PackedScene" path="res://scenes/items/quest_item.tscn" id="11_quest_item"]
 [ext_resource type="PackedScene" path="res://scenes/ui/win_screen.tscn" id="12_win_screen"]
+[ext_resource type="Script" path="res://scripts/world/quest_item_placer.gd" id="13_placer"]
+[ext_resource type="PackedScene" path="res://scenes/items/quest_item_2.tscn" id="14_quest_item_2"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ground"]
 size = Vector2(4000, 40)
@@ -78,7 +80,15 @@ max_spawn_interval = 1.5
 position = Vector2(600, 360)
 
 [node name="QuestItem" parent="World" instance=ExtResource("11_quest_item")]
-position = Vector2(350, 360)
+position = Vector2(0, 360)
+item_id = "quest_item"
+display_name = "Quest Item"
+
+[node name="QuestItem2" parent="World" instance=ExtResource("14_quest_item_2")]
+position = Vector2(0, 360)
+
+[node name="QuestItemPlacer" type="Node" parent="World"]
+script = ExtResource("13_placer")
 
 [node name="Player" parent="World" unique_id=424232789 instance=ExtResource("3_player")]
 z_index = 0

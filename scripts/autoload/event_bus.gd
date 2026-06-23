@@ -11,6 +11,8 @@ signal hits_changed(remaining_hits: int)
 signal invulnerability_started
 signal invulnerability_ended
 signal quest_item_picked_up
+signal quest_progress_changed
+signal quest_items_placed
 signal scroll_speed_changed(new_speed: float)
 signal dialog_requested(title: String, message: String)
 signal dialog_closed

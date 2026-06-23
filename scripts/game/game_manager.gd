@@ -5,7 +5,7 @@ extends Node2D
 func _ready() -> void:
 	EventBus.game_over.connect(_on_game_over)
 	EventBus.game_reset.connect(_on_game_reset)
-	call_deferred("_begin_run")
+	EventBus.quest_items_placed.connect(_begin_run, CONNECT_ONE_SHOT)
 
 
 func _process(delta: float) -> void:
