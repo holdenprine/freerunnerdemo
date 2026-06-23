@@ -5,7 +5,7 @@ const BASE_SCROLL_SPEED := 300.0
 const MAX_SCROLL_SPEED := 700.0
 const SPEED_RAMP_PER_SECOND := 8.0
 const MAX_HITS := 3
-const INVULNERABILITY_DURATION := 2.0
+const INVULNERABILITY_DURATION := 1.5
 
 var is_playing := false
 var is_game_over := false

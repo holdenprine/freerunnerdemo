@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" path="res://scenes/ui/hud.tscn" id="5_hud"]
 [ext_resource type="PackedScene" uid="uid://rew5hcs46hvg" path="res://scenes/npcs/test_npc.tscn" id="6_npc"]
 [ext_resource type="PackedScene" path="res://scenes/ui/dialog_box.tscn" id="7_dialog"]
+[ext_resource type="PackedScene" path="res://scenes/restart/game_over_menu.tscn" id="10_game_over"]
 [ext_resource type="Script" uid="uid://c8pdsao4cw22j" path="res://scripts/world/world_bounds.gd" id="8_bounds"]
 [ext_resource type="Script" uid="uid://djhowltgpmffv" path="res://scripts/world/camera_follow.gd" id="9_camera"]
 
@@ -83,3 +84,5 @@ script = ExtResource("9_camera")
 [node name="HUD" parent="." unique_id=1627008055 instance=ExtResource("5_hud")]
 
 [node name="DialogBox" parent="." unique_id=1617628845 instance=ExtResource("7_dialog")]
+
+[node name="GameOverMenu" parent="." instance=ExtResource("10_game_over")]
