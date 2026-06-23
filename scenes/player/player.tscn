@@ -1,22 +1,21 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene format=3 uid="uid://bv0akahrxnvyl"]
 
-[ext_resource type="Script" path="res://scripts/player/player.gd" id="1_player"]
+[ext_resource type="Script" uid="uid://8akhevvftc0a" path="res://scripts/player/player.gd" id="1_player"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_player"]
 size = Vector2(40, 60)
 
-[node name="Player" type="CharacterBody2D" groups=["player"]]
-collision_layer = 1
+[node name="Player" type="CharacterBody2D" unique_id=1293142616 groups=["player"]]
+z_index = 1
 collision_mask = 2
 script = ExtResource("1_player")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=338844657]
 position = Vector2(0, -30)
 shape = SubResource("RectangleShape2D_player")
 
-[node name="Visual" type="ColorRect" parent="."]
+[node name="Visual" type="ColorRect" parent="." unique_id=948381828]
 offset_left = -20.0
 offset_top = -60.0
 offset_right = 20.0
-offset_bottom = 0.0
 color = Color(0.2, 0.75, 0.35, 1)

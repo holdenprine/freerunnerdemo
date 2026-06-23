@@ -1,30 +1,42 @@
 extends Area2D
-class_name ScrollHazard
-## Base hazard that scrolls left and despawns off-screen.
+class_name MovingHazard
+## Hazard that moves horizontally and wraps with the world loop.
 
-@export var despawn_margin := 80.0
+@export var move_speed := 220.0
+@export var despawn_distance := 1200.0
 
-var _scroll_speed := GameState.BASE_SCROLL_SPEED
+var _move_direction := -1.0
+var _spawn_position := Vector2.ZERO
+var _world_bounds: Node2D
+
+
+func setup(move_direction: float) -> void:
+	_move_direction = move_direction
+	_spawn_position = global_position
 
 
 func _ready() -> void:
-	body_entered.connect(_on_body_entered)
-	EventBus.scroll_speed_changed.connect(_on_scroll_speed_changed)
-	_scroll_speed = GameState.scroll_speed
+	body_entered.connect(_handle_body_entered)
+	_world_bounds = get_tree().get_first_node_in_group("world_bounds")
 
 
 func _physics_process(delta: float) -> void:
-	if not GameState.is_playing:
+	if not GameState.is_playing or GameState.is_dialog_open:
 		return
-	position.x -= _scroll_speed * delta
-	if position.x < -despawn_margin:
+
+	position.x += _move_direction * move_speed * delta
+	if _world_bounds and _world_bounds.should_wrap_x(global_position.x):
+		global_position = _world_bounds.wrap_position(global_position)
+
+	if global_position.distance_to(_spawn_position) > despawn_distance:
 		queue_free()
 
 
-func _on_scroll_speed_changed(new_speed: float) -> void:
-	_scroll_speed = new_speed
-
-
-func _on_body_entered(body: Node2D) -> void:
+func _handle_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player"):
-		GameState.end_run()
+		on_player_hit(body)
+
+
+## Override in subclasses to define what happens when the player is hit.
+func on_player_hit(_body: Node2D) -> void:
+	GameState.end_run()
