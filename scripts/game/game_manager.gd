@@ -1,5 +1,5 @@
 extends Node2D
-## Drives score ticking and run lifecycle for the active game scene.
+## Drives difficulty scaling and run lifecycle for the active game scene.
 
 
 func _ready() -> void:

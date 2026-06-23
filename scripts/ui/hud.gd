@@ -1,21 +1,34 @@
 extends CanvasLayer
-## Displays live score and game-over prompts.
+## Displays hit counter and game-over prompts.
 
-@onready var score_label: Label = $MarginContainer/VBoxContainer/ScoreLabel
-@onready var high_score_label: Label = $MarginContainer/VBoxContainer/HighScoreLabel
+@onready var hit_counter: HBoxContainer = $MarginContainer/HitCounter
 @onready var game_over_panel: PanelContainer = $GameOverPanel
 @onready var game_over_label: Label = $GameOverPanel/MarginContainer/VBoxContainer/GameOverLabel
 @onready var restart_hint: Label = $GameOverPanel/MarginContainer/VBoxContainer/RestartHint
 
+var _hit_circles: Array[HitCircle] = []
+
 
 func _ready() -> void:
-	EventBus.score_changed.connect(_on_score_changed)
+	EventBus.hits_changed.connect(_on_hits_changed)
 	EventBus.game_over.connect(_on_game_over)
 	EventBus.game_started.connect(_on_game_started)
 	EventBus.game_reset.connect(_on_game_reset)
+	_build_hit_counter()
 	game_over_panel.hide()
-	_on_score_changed(GameState.score)
-	high_score_label.text = "HI %06d" % GameState.high_score
+	_on_hits_changed(GameState.hits_remaining)
+
+
+func _build_hit_counter() -> void:
+	for child in hit_counter.get_children():
+		child.queue_free()
+	_hit_circles.clear()
+
+	for i in GameState.MAX_HITS:
+		var circle := HitCircle.new()
+		circle.name = "HitCircle%d" % i
+		hit_counter.add_child(circle)
+		_hit_circles.append(circle)
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -26,21 +39,20 @@ func _unhandled_input(event: InputEvent) -> void:
 		GameState.reset_run()
 
 
-func _on_score_changed(new_score: int) -> void:
-	score_label.text = "%06d" % new_score
+func _on_hits_changed(remaining_hits: int) -> void:
+	for i in _hit_circles.size():
+		_hit_circles[i].is_filled = i < remaining_hits
 
 
 func _on_game_started() -> void:
 	game_over_panel.hide()
-	high_score_label.text = "HI %06d" % GameState.high_score
+	_on_hits_changed(GameState.hits_remaining)
 
 
 func _on_game_over() -> void:
 	game_over_panel.show()
 	game_over_label.text = "GAME OVER"
 	restart_hint.text = "Press Jump or R to restart"
-	if GameState.score >= GameState.high_score:
-		high_score_label.text = "HI %06d" % GameState.high_score
 
 
 func _on_game_reset() -> void:

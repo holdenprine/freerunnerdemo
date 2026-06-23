@@ -15,12 +15,17 @@ const STAND_WIDTH := 40.0
 var _is_ducking := false
 var _duck_shape := RectangleShape2D.new()
 var _world_bounds: WorldBounds
+var _flicker_tween: Tween
 
 
 func _ready() -> void:
 	_duck_shape.size = Vector2(STAND_WIDTH, DUCK_HEIGHT)
 	_apply_stance(false)
 	_world_bounds = get_parent() as WorldBounds
+	EventBus.invulnerability_started.connect(_on_invulnerability_started)
+	EventBus.invulnerability_ended.connect(_on_invulnerability_ended)
+	EventBus.game_started.connect(_on_game_started)
+	EventBus.game_over.connect(_on_game_over)
 
 
 func _physics_process(delta: float) -> void:
@@ -84,3 +89,33 @@ func _apply_stance(ducking: bool) -> void:
 		collision_shape.position = Vector2(0.0, -STAND_HEIGHT * 0.5)
 		visual.size = Vector2(STAND_WIDTH, STAND_HEIGHT)
 		visual.position = Vector2(-STAND_WIDTH * 0.5, -STAND_HEIGHT)
+
+
+func _on_invulnerability_started() -> void:
+	_start_flicker()
+
+
+func _on_invulnerability_ended() -> void:
+	_stop_flicker()
+
+
+func _on_game_started() -> void:
+	_stop_flicker()
+
+
+func _on_game_over() -> void:
+	_stop_flicker()
+
+
+func _start_flicker() -> void:
+	_stop_flicker()
+	_flicker_tween = create_tween().set_loops()
+	_flicker_tween.tween_property(visual, "modulate:a", 0.15, 0.08)
+	_flicker_tween.tween_property(visual, "modulate:a", 1.0, 0.08)
+
+
+func _stop_flicker() -> void:
+	if _flicker_tween:
+		_flicker_tween.kill()
+		_flicker_tween = null
+	visual.modulate = Color.WHITE
