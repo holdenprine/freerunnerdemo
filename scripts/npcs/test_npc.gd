@@ -5,7 +5,7 @@ extends Node2D
 @onready var prompt_label: Label = $PromptLabel
 
 @export var dialog_title := "Test NPC"
-@export_multiline var dialog_message := "Hello! This is a test dialog box.\n\nPress E or Esc to close."
+@export_multiline var dialog_message := "Hello! This is a test dialog box.\n\nPress Esc to close."
 
 var _player_nearby := false
 

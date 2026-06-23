@@ -45,5 +45,5 @@ autowrap_mode = 2
 [node name="CloseHint" type="Label" parent="Panel/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 12
-text = "Press E or Esc to close"
+text = "Press Esc to close"
 horizontal_alignment = 1

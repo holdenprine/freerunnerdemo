@@ -16,7 +16,7 @@ func _unhandled_input(event: InputEvent) -> void:
 	if not GameState.is_dialog_open:
 		return
 
-	if event.is_action_pressed("interact") or event.is_action_pressed("ui_cancel"):
+	if event.is_action_pressed("ui_cancel"):
 		get_viewport().set_input_as_handled()
 		_close_dialog()
 
