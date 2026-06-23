@@ -1,6 +1,8 @@
 extends Node
 ## Global signal bus for decoupled game events.
+## Signals are emitted/connected from other scripts via the EventBus autoload.
 
+@warning_ignore_start("unused_signal")
 signal game_started
 signal game_over
 signal game_reset
