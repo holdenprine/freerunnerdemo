@@ -8,7 +8,7 @@ size = Vector2(32, 60)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_interact"]
 size = Vector2(80, 80)
 
-[node name="TestNpc" type="Node2D" unique_id=1460328594]
+[node name="TestNpc" type="Node2D" unique_id=1460328594 groups=["quest_npcs"]]
 z_index = 0
 script = ExtResource("1_npc")
 
@@ -28,6 +28,7 @@ shape = SubResource("RectangleShape2D_npc")
 
 [node name="InteractionArea" type="Area2D" parent="." unique_id=1726412045]
 collision_layer = 0
+collision_mask = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea" unique_id=1293335496]
 position = Vector2(0, -30)

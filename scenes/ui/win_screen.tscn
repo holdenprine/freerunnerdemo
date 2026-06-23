@@ -1,0 +1,64 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/win_screen.gd" id="1_win_screen"]
+
+[node name="WinScreen" type="CanvasLayer"]
+layer = 12
+
+[node name="Menu" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_win_screen")
+
+[node name="Background" type="ColorRect" parent="Menu"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.65)
+
+[node name="CenterContainer" type="CenterContainer" parent="Menu"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="PanelContainer" parent="Menu/CenterContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Menu/CenterContainer/Panel"]
+layout_mode = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Menu/CenterContainer/Panel/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="TitleLabel" type="Label" parent="Menu/CenterContainer/Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "You've Won!"
+horizontal_alignment = 1
+
+[node name="MessageLabel" type="Label" parent="Menu/CenterContainer/Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "You returned the quest item."
+horizontal_alignment = 1
+
+[node name="ContinueButton" type="Button" parent="Menu/CenterContainer/Panel/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(220, 44)
+layout_mode = 2
+text = "Continue"
